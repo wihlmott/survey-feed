@@ -1,0 +1,61 @@
+textarea {
+  resize: none;
+  width: 94%;
+  height: 10vh;
+  margin: 10px 0;
+  position: relative;
+  left: 50%;
+  top: 170px;
+  transform: translateX(-50%);
+  background-color: #f2f2f2;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  border-top: 20px solid transparent;
+}
+
+div {
+  position: relative;
+  width: 94%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+
+.question {
+  box-shadow: 1px 1px 5px -3px rgba(0, 0, 0, 0.67);
+  height: 5rem;
+  top: 90px;
+  position: absolute;
+}
+
+.placeholder {
+  position: absolute;
+  left: 16px;
+  top: 215px;
+  color: rgba(145, 145, 145, 0.6);
+  transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+textarea:focus + .placeholder {
+  top: 180px;
+  font-size: 1.1rem;
+  color: rgb(73, 73, 73);
+}
+
+.submit {
+  height: 2rem;
+  position: relative;
+  border: none;
+  background-color: pink;
+  top: 160px;
+  padding: 3px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 1px 1px 5px -3px rgba(0, 0, 0, 0.67);
+  position: relative;
+  width: 94%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}

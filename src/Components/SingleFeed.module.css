@@ -1,0 +1,68 @@
+.singleFeed {
+  box-sizing: border-box;
+  left: 0;
+  transform: translateX(0);
+  padding: 0;
+  display: block;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 4.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.deleteButton {
+  cursor: pointer;
+  float: right;
+  margin: 0 5px 0 0;
+  position: relative;
+  top: -12px;
+  font-size: 1.2rem;
+}
+.upvoteButton {
+  z-index: 1;
+  cursor: pointer;
+  float: right;
+  position: relative;
+  margin: 5px 7px;
+}
+.vote {
+  position: relative;
+  top: 3px;
+  left: 20px;
+  padding-top: 0;
+  text-align: left;
+}
+.author {
+  float: left;
+  border: none;
+  box-shadow: none;
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.text {
+  left: 0;
+  transform: translateX(0);
+  display: inline-block;
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  width: 80%;
+}
+.buttons {
+  left: 0;
+  transform: translateX(0);
+  position: static;
+  display: inline-block;
+  float: right;
+  width: 18%;
+}
+
+.comment {
+  padding: 3px;
+}
+
+.liked {
+  color: blue;
+}

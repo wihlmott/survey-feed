@@ -1,0 +1,86 @@
+.feedCard {
+  width: 94%;
+  height: 40vh;
+  margin: 10px 0;
+  padding-top: 5px;
+  position: relative;
+  left: 50%;
+  top: 175px;
+  transform: translateX(-50%);
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+
+.feedInfo {
+  position: relative;
+  top: 180px;
+  padding-left: 12px;
+  padding-top: 0;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.privateSetting {
+  transform: translateX(57%);
+  position: absolute;
+  top: 175px;
+  width: 30%;
+  height: 2rem;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.publicButton {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 2rem;
+  left: 0;
+  transform: translateX(0);
+  padding-top: 6px;
+  background-color: none;
+  color: transparent;
+  transition: transform 0.1s;
+}
+.privateButton {
+  position: absolute;
+  top: 0;
+  padding-top: 6px;
+  width: 100%;
+  height: 2rem;
+  left: 0;
+  transform: translateX(0);
+  background-color: none;
+  color: transparent;
+  transition: transform 0.1s;
+}
+.anonymousButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(0);
+  width: 100%;
+  height: 2rem;
+  padding-top: 6px;
+  background-color: none;
+  color: transparent;
+  transition: transform 0.1s;
+}
+.selectedButton {
+  background-color: aqua;
+  color: black;
+  z-index: 2;
+}
+
+.moved1 {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: translateY(100%);
+  color: black;
+}
+.moved2 {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: translateY(200%);
+  color: black;
+}
