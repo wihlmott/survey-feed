@@ -4,7 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import classes from "./SingleFeed.module.css";
 import { useContext } from "react";
 
-const SingleFeed = ({ feed, deleteFeed, upvote }) => {
+const SingleFeed = ({ feed, deleteFeed, upvote, privateStatus }) => {
   const [user] = useContext(UserContext);
 
   const deleteHandler = (e) => {
@@ -26,15 +26,15 @@ const SingleFeed = ({ feed, deleteFeed, upvote }) => {
         <span className={classes.comment}>{feed.comment}</span>
       </div>
       <div className={classes.buttons}>
-        <BsArrowUpCircleFill
+        {privateStatus!=='private' && <BsArrowUpCircleFill
           className={
             liked
               ? `${classes.upvoteButton} ${classes.liked}`
               : `${classes.upvoteButton}`
           }
           onClick={upvoteHandler}
-        />
-        <p className={classes.vote}>{feed.voters.length}</p>
+        />}
+        {privateStatus!=='private' && <p className={classes.vote}>{feed.voters.length}</p>}
         <br />
         {user.username === feed.id.split("^")[1] && (
           <MdDeleteForever

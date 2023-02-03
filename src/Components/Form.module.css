@@ -28,6 +28,10 @@ div {
   top: 90px;
   position: absolute;
 }
+.questionText{
+  font-size: 1rem;
+  color: black;
+}
 
 .placeholder {
   position: absolute;

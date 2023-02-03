@@ -9,6 +9,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { topics } from "./Config/Config";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYm39UmovLquw5ujmjfkxmdztNL2RCsWk",
@@ -16,8 +17,9 @@ const firebaseConfig = {
   projectId: "survey-feed",
   storageBucket: "survey-feed.appspot.com",
   messagingSenderId: "95536620979",
-  appId: "1:95536620979:web:de82d1ed226c7c481217c6",
+  appId: "1:95536620979:web:7f3c1f6004881bbf1217c6"
 };
+
 
 const app = initializeApp(firebaseConfig);
 
@@ -48,10 +50,10 @@ export const retrieveUsers = async () => {
   return users;
 };
 
-export const retrievePUB = async () => {
+export const retrievePUB = async (topic) => {
   console.log(`fetching data -- public comments`);
 
-  const colRef = collection(db, "users", "publicComments", "comments"); //collection reference
+  const colRef = collection(db, "users", "publicComments", topic); //collection reference
   const publicComments = [];
   try {
     const snapshot = await getDocs(colRef); //get collection data -- getDocs returns a promise
@@ -64,10 +66,10 @@ export const retrievePUB = async () => {
   return publicComments;
 };
 
-export const retrievePVT = async (username) => {
+export const retrievePVT = async (topic, username) => {
   console.log(`fetching data -- private comments`);
 
-  const colRef = collection(db, "users", username, "privateComments"); //collection reference
+  const colRef = collection(db, "users", username, topic); //collection reference
   const privateComments = [];
   try {
     const snapshot = await getDocs(colRef); //get collection data -- getDocs returns a promise
@@ -80,10 +82,10 @@ export const retrievePVT = async (username) => {
   return privateComments;
 };
 
-export const retrieveComment = async (id) => {
+export const retrieveComment = async (topic,id) => {
   console.log(`fetching data -- specific comment`);
 
-  const docRef = doc(db, "users", "publicComments", "comments", id);
+  const docRef = doc(db, "users", "publicComments", topic, id);
   try {
     return (await getDoc(docRef)).data();
   } catch (err) {
@@ -99,31 +101,31 @@ export const setNewUser = async (user) => {
   }
 };
 
-export const updatePUB = async (comment) => {
+export const updatePUB = async (topic, comment) => {
   console.log(`sending data -- updating public comments`);
 
-  try {
-    await setDoc(
-      doc(db, "users", "publicComments", "comments", comment.id),
-      {
-        author: comment.author,
-        voters: comment.voters,
-        id: comment.id,
-        comment: comment.comment,
-      },
-      { merge: true }
-    );
-  } catch (err) {
-    console.log(comment);
-    console.log(err);
-  }
+    try {
+      await setDoc(
+        doc(db, "users", "publicComments", topic, comment.id),
+        {
+          author: comment.author,
+          voters: comment.voters,
+          id: comment.id,
+          comment: comment.comment,
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.log(comment);
+      console.log(err);
+    }
 };
 
-export const updatePVT = async (username, comment) => {
+export const updatePVT = async (topic, username, comment) => {
   console.log(`sending data -- updating private comments`);
 
   try {
-    await setDoc(doc(db, "users", username, "privateComments", comment.id), {
+    await setDoc(doc(db, "users", username, topic, comment.id), {
       author: comment.author,
       voters: comment.voters,
       id: comment.id,
@@ -135,10 +137,10 @@ export const updatePVT = async (username, comment) => {
   }
 };
 
-export const deletePUBCommentDB = async (id) => {
+export const deletePUBCommentDB = async (topic,id) => {
   console.log(`deleting data`);
 
-  const docRef = doc(db, "users", "publicComments", "comments", id);
+  const docRef = doc(db, "users", "publicComments", topic, id);
   try {
     await deleteDoc(docRef);
   } catch (err) {
@@ -146,10 +148,10 @@ export const deletePUBCommentDB = async (id) => {
   }
 };
 
-export const deletePVTCommentDB = async (username, id) => {
+export const deletePVTCommentDB = async (topic,username, id) => {
   console.log(`deleting data`);
 
-  const docRef = doc(db, "users", username, "privateComments", id);
+  const docRef = doc(db, "users", username, topic, id);
   try {
     await deleteDoc(docRef);
   } catch (err) {
@@ -157,10 +159,10 @@ export const deletePVTCommentDB = async (username, id) => {
   }
 };
 
-export const updateVoters = async (id, voters) => {
+export const updateVoters = async (topic,id, voters) => {
   console.log(`sending data -- updating votes`);
 
-  const docRef = doc(db, "users", "publicComments", "comments", id);
+  const docRef = doc(db, "users", "publicComments", topic, id);
   try {
     await setDoc(
       docRef,

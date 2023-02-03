@@ -13,10 +13,12 @@ const Form = (props) => {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.question}>
-        <label>
+        <label style={{fontSize:'0.9rem', color:'rgba(0, 0, 0, 0.7)'}}>
           What would you like to know about:
           <br />
-          {props.question}
+          <span className={classes.questionText}>
+            {props.question}
+            </span>
         </label>
       </div>
       <label className={classes.commentLabel}>

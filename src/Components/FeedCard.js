@@ -119,6 +119,7 @@ const FeedCard = ({
                 key={entry.id}
                 upvote={upvoteHandler}
                 deleteFeed={deleteHandler}
+                privateStatus={privateStatus}
               />
             );
           })}

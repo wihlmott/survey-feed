@@ -1,4 +1,3 @@
-import { useState } from "react";
 import classes from "./SurveyBtn.module.css";
 
 const SurveyBtn = ({ text, sendSelection, selected }) => {

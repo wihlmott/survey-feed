@@ -63,21 +63,22 @@ function App() {
       case "DELETE_COMMENT":
         //action.payload is the id
         if (action.payload.split("^")[1] !== user.username) return state; //can only delete if you are the OP
+        setLoading(true);
         if (privateStatus === "private") {
-          deletePVTCommentDB(user.username, action.payload).then(() => {});
+          deletePVTCommentDB(question,user.username, action.payload).then(() => {setLoading(false);});
           return { ...state };
         } else {
-          deletePUBCommentDB(action.payload);
+          deletePUBCommentDB(question,action.payload).then(() => {setLoading(false);});
           return { ...state };
         }
       case "ADD_TO_PUBLIC":
         //action.payload is the comment
-        updatePUB(action.payload).then(() => {});
+        updatePUB(question,action.payload).then(() => {});
         return { ...state };
       case "ADD_TO_PRIVATE":
         //action.payload is the comment
         // const updatedPVTComments = [...state.privateComments, action.payload];
-        updatePVT(user.username, action.payload).then(() => {});
+        updatePVT(question,user.username, action.payload).then(() => {});
         // return { ...state, privateComments: updatedPVTComments };
         return { ...state };
       case "UPVOTE":
@@ -86,16 +87,16 @@ function App() {
         setLoading(true);
         (async function () {
           try {
-            const comment = await retrieveComment(action.payload);
+            const comment = await retrieveComment(question,action.payload);
             const commentVoters = comment.voters;
             if (commentVoters.find((el) => el === user.username)) {
               const updatedVoters = commentVoters.filter(
                 (el) => el !== user.username
               );
-              updateVoters(action.payload, updatedVoters).then(() => {});
+              updateVoters(question,action.payload, updatedVoters).then(() => {});
             } else {
               const updatedVoters = [...commentVoters, user.username];
-              updateVoters(action.payload, updatedVoters).then(() => {});
+              updateVoters(question,action.payload, updatedVoters).then(() => {});
             }
             setLoading(false);
           } catch (err) {
@@ -117,15 +118,16 @@ function App() {
   const [commentsPVTdb, setCommentsPVTdb] = useState([]);
 
   useEffect(() => {
-    retrievePUB().then((res) => {
+    retrievePUB(question).then((res) => {
       setCommentsPUBdb(res);
     });
-    retrievePVT(user.username).then((res) => {
+    retrievePVT(question, user.username).then((res) => {
       setCommentsPVTdb(res);
     });
-  }, [state, loading]);
+  }, [state, loading, page==='feedPage']);
 
   const gotoFeed = () => {
+    if(!question)return;
     setPage("feedPage");
   };
   const sendSelection = (topic) => {
@@ -161,23 +163,27 @@ function App() {
       });
   };
 
+  const goBack = () => {
+    setPage("questionPage");
+  }
+
   if (page === "login")
     return (
       <UserContext.Provider value={[user, setUser, setPage]}>
-        <Card>
+        <Card goBack={goBack} page={page}>
           <p className={classes.thankyou}>
             thank you for being a part of our survey
           </p>
           <p className={classes.publicFeed}>
             read through the public feed, if you share the same sentiments as
             you see in a comment,{" "}
-            <span style={{ fontWeight: "bold" }}>upvote it</span>.
+            <span style={{ fontWeight: "bold", textDecoration: 'underline' }}>upvote it</span>.
           </p>
           <p className={classes.publicButton}>
             by selecting the{" "}
-            <span style={{ fontWeight: "bold" }}>public button</span>, you can
+            <span style={{ fontWeight: "bold", textDecoration: 'underline'  }}>public button</span>, you can
             choose if your comment should be{" "}
-            <span style={{ fontWeight: "bold" }}>anonymous or not</span>. This
+            <span style={{ fontWeight: "bold", textDecoration: 'underline'  }}>anonymous or not</span>. This
             will display in the public feed. If you select private, it will only
             be viewed by administration.
           </p>
@@ -187,7 +193,8 @@ function App() {
     );
   else if (page === "questionPage")
     return (
-      <Card>
+      <Card goBack={goBack} page={page}>
+        <p className={classes.question}>which topic most appeals to you:</p>
         {topics.map((topic) => {
           const selected = topic === question;
           return (
@@ -199,14 +206,16 @@ function App() {
             />
           );
         })}
-        <NextBtn gotoFeed={gotoFeed} />
+        <br/>
+        <p className={classes.footerText}>you will be able to return to choose another topic</p>
+        <NextBtn gotoFeed={gotoFeed}/>
       </Card>
     );
   else if (page === "feedPage")
     return (
       <div>
         <UserContext.Provider value={[user, setUser]}>
-          <Card>
+          <Card goBack={goBack} page={page}>
             {loading && <Dots className={classes.dots} />}
             <Form setData={setData} question={question} />
             {privateStatus === "private" && (

@@ -18,3 +18,14 @@ p {
   padding-top: 25px;
   text-align: center;
 }
+
+.question{
+  padding-left: 20px;
+  top: 10%;
+  text-align: left;
+}
+
+.footerText{
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+}
