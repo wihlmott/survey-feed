@@ -5,7 +5,6 @@ import FeedCard from "./Components/FeedCard";
 import Form from "./Components/Form";
 import SignIn from "./Components/SignIn";
 import Dots from "react-activity/dist/Dots";
-import NextBtn from "./Components/NextBtn";
 import SurveyBtn from "./Components/SurveyBtn";
 
 import classes from "./App.module.css"; //style
@@ -126,10 +125,6 @@ function App() {
     });
   }, [state, loading, page==='feedPage']);
 
-  const gotoFeed = () => {
-    if(!question)return;
-    setPage("feedPage");
-  };
   const sendSelection = (topic) => {
     setQuestion(topic);
   };
@@ -166,11 +161,15 @@ function App() {
   const goBack = () => {
     setPage("questionPage");
   }
+  const gotoFeed = () => {
+    if(!question)return;
+    setPage("feedPage");
+  };
 
   if (page === "login")
     return (
       <UserContext.Provider value={[user, setUser, setPage]}>
-        <Card goBack={goBack} page={page}>
+        <Card goBack={goBack} gotoFeed={gotoFeed} page={page}>
           <p className={classes.thankyou}>
             thank you for being a part of our survey
           </p>
@@ -193,7 +192,7 @@ function App() {
     );
   else if (page === "questionPage")
     return (
-      <Card goBack={goBack} page={page}>
+      <Card goBack={goBack} gotoFeed={gotoFeed} page={page} message={`you will be able to return to choose another topic`}>
         <p className={classes.question}>which topic most appeals to you:</p>
         {topics.map((topic) => {
           const selected = topic === question;
@@ -206,16 +205,13 @@ function App() {
             />
           );
         })}
-        <br/>
-        <p className={classes.footerText}>you will be able to return to choose another topic</p>
-        <NextBtn gotoFeed={gotoFeed}/>
       </Card>
     );
   else if (page === "feedPage")
     return (
       <div>
         <UserContext.Provider value={[user, setUser]}>
-          <Card goBack={goBack} page={page}>
+          <Card goBack={goBack} gotoFeed={gotoFeed} page={page}>
             {loading && <Dots className={classes.dots} />}
             <Form setData={setData} question={question} />
             {privateStatus === "private" && (

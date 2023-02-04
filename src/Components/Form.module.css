@@ -21,11 +21,10 @@ div {
   transform: translateX(-50%);
   border-radius: 5px;
 }
-
 .question {
   box-shadow: 1px 1px 5px -3px rgba(0, 0, 0, 0.67);
   height: 5rem;
-  top: 90px;
+  top: 70px;
   position: absolute;
 }
 .questionText{
@@ -36,13 +35,13 @@ div {
 .placeholder {
   position: absolute;
   left: 16px;
-  top: 215px;
+  top: 195px;
   color: rgba(145, 145, 145, 0.6);
   transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
 }
 
 textarea:focus + .placeholder {
-  top: 180px;
+  top: 155px;
   font-size: 1.1rem;
   color: rgb(73, 73, 73);
 }

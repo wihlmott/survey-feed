@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body{
+  height: 95vh;
+}
+
 .dots {
   position: absolute;
   width: auto;
@@ -23,9 +27,4 @@ p {
   padding-left: 20px;
   top: 10%;
   text-align: left;
-}
-
-.footerText{
-  font-size: 0.85rem;
-  color: rgba(0, 0, 0, 0.6);
 }
