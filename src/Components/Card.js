@@ -2,14 +2,17 @@ import classes from "./Card.module.css";
 import Div100vh from "react-div-100vh";
 import Theme from "./Theme";
 import NextBtn from "./NextBtn";
+import HelpModal from "./HelpModal";
+import { useState } from "react";
 
 const Card = (props) => {
-  console.log("page: " + props.page);
+  const [open, setOpen] = useState(false);
+
   const goBack = () => {
     props.goBack();
   };
   const openHelp = () => {
-    console.log(`show help`);
+    setOpen(true);
   };
   return (
     <Div100vh className={classes.div100}>
@@ -32,6 +35,7 @@ const Card = (props) => {
         )}
         {props.page === "questionPage" && <NextBtn gotoFeed={props.gotoFeed} />}
       </div>
+      {open && <HelpModal open={open} setOpen={setOpen} />}
     </Div100vh>
   );
 };

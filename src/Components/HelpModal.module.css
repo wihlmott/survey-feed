@@ -1,0 +1,28 @@
+.overlay {
+  height: 100%;
+  width: 110%;
+  background-color: #afaeae57;
+}
+
+.modal {
+  top: 30%;
+  height: 8rem;
+  width: 280px;
+  background-color: #fff;
+  text-align: center;
+  padding: 12px;
+}
+
+.closeBtn {
+  color: #919396;
+  float: right;
+}
+
+.nextBtn {
+  font-size: 1.2rem;
+  position: fixed;
+  color: #919396;
+  font-weight: 900;
+  right: 15px;
+  bottom: 15px;
+}
