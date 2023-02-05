@@ -20,6 +20,7 @@ import {
   retrievePUB,
   retrievePVT,
   deletePVTCommentDB,
+  saveChoice,
 } from "./Firebase";
 
 import { topics } from "./Config/Config";
@@ -171,8 +172,15 @@ function App() {
   const goBack = () => {
     setPage("questionPage");
   };
-  const gotoFeed = () => {
+  const gotoFeed = async () => {
     if (!question) return;
+    setLoading(true);
+    try {
+      await saveChoice(question, user.username);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
     setPage("feedPage");
   };
 
@@ -183,7 +191,7 @@ function App() {
           <p className={classes.thankyou}>
             thank you for being a part of our survey
           </p>
-          <p className={classes.publicFeed}>
+          {/* <p className={classes.publicFeed}>
             read through the public feed, if you share the same sentiments as
             you see in a comment,{" "}
             <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
@@ -202,7 +210,7 @@ function App() {
             </span>
             . This will display in the public feed. If you select private, it
             will only be viewed by administration.
-          </p>
+          </p> */}
           <SignIn setLoggedIn={setLoggedIn} />
         </Card>
       </UserContext.Provider>
@@ -215,6 +223,7 @@ function App() {
         page={page}
         message={`you will be able to return to choose another topic`}
       >
+        {loading && <Dots className={classes.dots} />}
         <p className={classes.question}>which topic most appeals to you:</p>
         {topics.map((topic) => {
           const selected = topic === question;
@@ -233,7 +242,12 @@ function App() {
     return (
       <div>
         <UserContext.Provider value={[user, setUser]}>
-          <Card goBack={goBack} gotoFeed={gotoFeed} page={page}>
+          <Card
+            goBack={goBack}
+            gotoFeed={gotoFeed}
+            page={page}
+            message={`your choice has been recorded`}
+          >
             {loading && <Dots className={classes.dots} />}
             <Form setData={setData} question={question} />
             {privateStatus === "private" && (

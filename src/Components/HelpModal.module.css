@@ -5,6 +5,7 @@
 }
 
 .modal {
+  z-index: 10;
   top: 30%;
   height: 8rem;
   width: 280px;
@@ -25,4 +26,11 @@
   font-weight: 900;
   right: 15px;
   bottom: 15px;
+}
+
+.text {
+  padding: 0;
+  width: 90%;
+  height: 5rem;
+  overflow-y: scroll;
 }
