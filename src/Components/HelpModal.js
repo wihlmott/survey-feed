@@ -11,7 +11,7 @@ const HelpModal = ({ open, setOpen }) => {
         <span className={classes.closeBtn} onClick={close}>
           ✖
         </span>
-        <span className={classes.nextBtn}>></span>
+        <span className={classes.nextBtn}>{">"}</span>
       </div>
     </div>
   );
