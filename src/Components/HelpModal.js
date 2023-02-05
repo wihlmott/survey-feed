@@ -6,7 +6,7 @@ const HelpModal = ({ open, setOpen }) => {
   };
 
   return (
-    <div className={classes.overlay}>
+    <div className={classes.overlay} onClick={close}>
       <div className={classes.modal}>
         <span className={classes.closeBtn} onClick={close}>
           ✖
