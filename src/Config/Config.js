@@ -7,8 +7,9 @@ export const topics = [
 ];
 
 export const help = [
-  "Read through the public feed, if you share the same sentiments as you see in a comment upvote it",
+  "Read through the public feed. Post comments and upvote comments that you can relate to.",
   "By selecting the public button, you can choose if your comment should be anonymous or not. This will display in the public feed. If you select private, it will only be viewed by administration.",
   "You will be able to go back and comment on any of the topics",
   "If you choose not to comment, provided you press 'next', your selection will be recorded",
+  "You will automatically sign-out one minute after the browser closes.",
 ];

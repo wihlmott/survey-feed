@@ -59,6 +59,9 @@ function App() {
     const savedUser = JSON.parse(window.localStorage.getItem("savedUser"));
     const savedQuestion = window.localStorage.getItem("selectedQuestionPage");
 
+    const timeClosed = window.localStorage.getItem("timeClosed");
+    if (Date.now() - timeClosed > 60000) window.localStorage.clear();
+
     console.log(savedUser, savedQuestion);
 
     if (savedUser) {
@@ -202,12 +205,17 @@ function App() {
     setPage("feedPage");
   };
 
+  window.addEventListener("beforeunload", () => {
+    const time = Date.now();
+    window.localStorage.setItem("timeClosed", time);
+  });
+
   if (page === "login")
     return (
       <UserContext.Provider value={[user, setUser, setPage]}>
         <Card goBack={goBack} gotoFeed={gotoFeed} page={page}>
           <p className={classes.thankyou}>
-            thank you for being a part of our survey
+            Thank you for being a part of our survey!
           </p>
           <SignIn />
           {/* <SignIn setLoggedIn={setLoggedIn} /> */}
@@ -223,7 +231,7 @@ function App() {
         message={`you will be able to return to choose another topic`}
       >
         {loading && <Dots className={classes.dots} />}
-        <p className={classes.question}>which topic most appeals to you:</p>
+        <p className={classes.question}>Which topic most appeals to you?</p>
         {topics.map((topic) => {
           const selected = topic === question;
           return (
