@@ -9,7 +9,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { topics } from "./Config/Config";
+// import { topics } from "./Config/Config";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYm39UmovLquw5ujmjfkxmdztNL2RCsWk",

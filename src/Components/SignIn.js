@@ -47,7 +47,8 @@ const SignIn = ({ setLoggedIn }) => {
 
   const setActiveUser = (user) => {
     setUserCtx({ username: user.email, author: user.displayName });
-    setLoggedIn(true);
+    window.localStorage.setItem("savedUser", JSON.stringify(user));
+    // setLoggedIn(true);
   };
 
   return (

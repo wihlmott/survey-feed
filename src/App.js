@@ -51,9 +51,24 @@ function App() {
   };
   ///
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
   const [page, setPage] = useState("login");
   const [question, setQuestion] = useState();
+
+  useEffect(() => {
+    const savedUser = JSON.parse(window.localStorage.getItem("savedUser"));
+    const savedQuestion = window.localStorage.getItem("selectedQuestionPage");
+
+    console.log(savedUser, savedQuestion);
+
+    if (savedUser) {
+      setUser({ username: savedUser.email, author: savedUser.displayName });
+      if (savedQuestion) {
+        setQuestion(savedQuestion.replaceAll(`"`, ""));
+        setPage("feedPage");
+      } else setPage("questionPage");
+    } else if (user === USER) setPage("login");
+  }, []);
 
   const [loading, setLoading] = useState(false);
   const [privateStatus, setPrivateStatus] = useState("public");
@@ -138,6 +153,7 @@ function App() {
 
   const sendSelection = (topic) => {
     setQuestion(topic);
+    window.localStorage.setItem("selectedQuestionPage", JSON.stringify(topic));
   };
 
   const setPrivate = () => {
@@ -171,6 +187,8 @@ function App() {
 
   const goBack = () => {
     setPage("questionPage");
+    setQuestion("");
+    window.localStorage.removeItem("selectedQuestionPage");
   };
   const gotoFeed = async () => {
     if (!question) return;
@@ -191,27 +209,8 @@ function App() {
           <p className={classes.thankyou}>
             thank you for being a part of our survey
           </p>
-          {/* <p className={classes.publicFeed}>
-            read through the public feed, if you share the same sentiments as
-            you see in a comment,{" "}
-            <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
-              upvote it
-            </span>
-            .
-          </p>
-          <p className={classes.publicButton}>
-            by selecting the{" "}
-            <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
-              public button
-            </span>
-            , you can choose if your comment should be{" "}
-            <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
-              anonymous or not
-            </span>
-            . This will display in the public feed. If you select private, it
-            will only be viewed by administration.
-          </p> */}
-          <SignIn setLoggedIn={setLoggedIn} />
+          <SignIn />
+          {/* <SignIn setLoggedIn={setLoggedIn} /> */}
         </Card>
       </UserContext.Provider>
     );
@@ -259,7 +258,7 @@ function App() {
                 privateStatus={privateStatus}
                 upvote={upvote}
                 deleteFeed={deleteComment}
-                loggedIn={loggedIn}
+                // loggedIn={loggedIn}
               />
             )}
             {privateStatus !== "private" && (
@@ -271,7 +270,7 @@ function App() {
                 privateStatus={privateStatus}
                 upvote={upvote}
                 deleteFeed={deleteComment}
-                loggedIn={loggedIn}
+                // loggedIn={loggedIn}
               />
             )}
           </Card>
